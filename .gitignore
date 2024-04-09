@@ -1,2 +1,4 @@
 env
 .idea
+token.txt
+.DS_Store
