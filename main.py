@@ -2,6 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 import sys
 import plotly.io as pio
+import time
 
 
 def read_matrix() -> np.ndarray[np.ndarray]:
@@ -20,7 +21,7 @@ def read_vector() -> np.ndarray:
     Function reads a vector called b from the input to solve a linear equation in the 'Ax = b' form
     :return: np.ndarray - vector b from the input
     """
-    return np.array(list(map(int, input().split())))
+    return np.array(list(map(int, input("Enter vector b in format 'x y z': ").split())))
 
 
 def check_dimensions(a: np.ndarray[np.ndarray], b: np.ndarray) -> bool:
@@ -82,8 +83,6 @@ def plot_dimension(a: np.ndarray[np.ndarray], b: np.ndarray, p: np.ndarray) -> N
     # get cross product of the vector of matrix A
     cross_prod = np.cross(a[:, 0], a[:, 1])
 
-    print(cross_prod)
-
     # get points for the plane
     x = np.linspace(-a[:, 0].max(), a[:, 0].max(), 500)
     y = np.linspace(-a[:, 1].max(), a[:, 1].max(), 500)
@@ -123,12 +122,14 @@ def plot_dimension(a: np.ndarray[np.ndarray], b: np.ndarray, p: np.ndarray) -> N
         name='Projection of vector b'
     ))
 
-    pio.show(fig)
+    # pio.show(fig,validate=False)
+    fig.show()
 
 
 def main():
     b = read_vector()
     print()
+    print("Enter 3x2 matrix A:")
     A = read_matrix()
     if check_dimensions(A, b):
         p = find_projection(A, b)
@@ -136,6 +137,7 @@ def main():
         new_x = solve_lin_equation(A, p)
         print(f'solution of the system of linear equations = {new_x}')
         plot_dimension(A, b, p)
+        time.sleep(100000)
 
 
 if __name__ == "__main__":
